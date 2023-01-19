@@ -18,7 +18,7 @@ pipeline {
                 sh 'mvn clean install'
             }
          }
-            stage('test junit'){
+           stage('Unit tests'){
             steps{
                 sh 'mvn test'
             }
@@ -40,19 +40,32 @@ pipeline {
         }
         stage("Push to DockerHub") {
                 steps{
-                    sh 'docker push chmeglax/employee-api:latest'
+                    sh 'docker push  chmeglax/employee-api:latest'
                 }
+        }
+        stage("Deploy to k8s"){
+            steps{
+                sshagent(['k8s']) {
+                    sh "scp -o StrictHostKeyChecking=no deploymentService.yaml vagrant@10.0.0.10:/home/vagrant"
+                    sh "scp -o StrictHostKeyChecking=no deploymentDb.yaml vagrant@10.0.0.10:/home/vagrant"
+                    script {
+                        try {
+                            sh "ssh vagrant@10.0.0.10 kubectl apply -f ./deploymentDb.yaml"
+                        }catch(error){
+                            sh "ssh vagrant@10.0.0.10 kubectl create -f ./deploymentDb.yaml"
+                        }
+                        try {
+                            sh "ssh vagrant@10.0.0.10 kubectl apply -f ./deploymentService.yaml"
+                        }catch(error){
+                            sh "ssh vagrant@10.0.0.10 kubectl create -f ./deploymentService.yaml"
+                        }
+                    }
+                }
+            }
         }
 
 
     }
-       /*   post {
-        success {
-            emailext  body: 'Le pipeline que vous venez de lancer est achevé avec succé', recipientProviders: [buildUser()], subject: 'Build réussi', to: 'elyes.benothman@esprit.tn'
-        }
-        failure{
-            emailext attachLog: true, body: 'Le pipeline que vous vener de lancez est achevé avec failure', recipientProviders: [buildUser()], subject: 'Build failed', to: 'elyes.benothman@esprit.tn'
-        }
-    }*/
+
 
 }

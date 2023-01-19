@@ -4,7 +4,6 @@ pipeline {
         PATH = "$PATH:/usr/share/maven"
          registry='chmeglax/employee-api'
              registryCredential = 'dockerhub'
-        dockerImage=''
     }
      stages {
         stage("fetch code"){

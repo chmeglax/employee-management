@@ -9,7 +9,7 @@ pipeline {
      stages {
         stage("fetch code"){
              steps{
-               git branch: 'main', credentialsId: '75318dc8-9b05-4994-95fc-250bf52c647e', url: 'https://github.com/chmeglax/employee-management.git'
+               git branch: 'main', credentialsId: '2d98216b-4f2b-4934-b40f-9efa97f83a9a', url: 'https://github.com/chmeglax/employee-management.git'
              }
          }
 

@@ -42,7 +42,9 @@ pipeline {
         }
         stage("Push to DockerHub") {
                 steps{
-                    sh 'docker push chmeglax/achat'
+                    script {
+                        docker.push registry + ":$BUILD_NUMBER"
+                    }
                 }
         }
 

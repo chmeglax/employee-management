@@ -14,7 +14,7 @@
 	<name>employee-api</name>
 	<description>Spring Boot RESTful Web Services</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

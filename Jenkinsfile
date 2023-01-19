@@ -28,9 +28,7 @@ pipeline {
 
          stage("Building Docker Image") {
                 steps{
-                    script {
-                        docker.build registry + ":$BUILD_NUMBER"
-                    }
+                    sh 'docker build -t chmeglax/employee-api:latest .'
                 }
         }
         
@@ -42,9 +40,7 @@ pipeline {
         }
         stage("Push to DockerHub") {
                 steps{
-                    script {
-                        docker.push registry + ":$BUILD_NUMBER"
-                    }
+                    sh 'docker push chmeglax/employee-api:latest'
                 }
         }
 

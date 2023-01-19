@@ -48,13 +48,13 @@ pipeline {
 
 
     }
-          post {
+       /*   post {
         success {
             emailext  body: 'Le pipeline que vous venez de lancer est achevé avec succé', recipientProviders: [buildUser()], subject: 'Build réussi', to: 'elyes.benothman@esprit.tn'
         }
         failure{
             emailext attachLog: true, body: 'Le pipeline que vous vener de lancez est achevé avec failure', recipientProviders: [buildUser()], subject: 'Build failed', to: 'elyes.benothman@esprit.tn'
         }
-    }
+    }*/
 
 }
